@@ -8,7 +8,6 @@
   <style>
     :root{
       --hero-gap: clamp(12px, 3vw, 28px);
-      /* centralize brand gradient stops so hero & footer match */
       --brand-stops: #ff00ff, #00ffff, #ff0099, #00ffcc;
     }
 
@@ -33,11 +32,7 @@
       animation: neonMove 15s ease infinite;
       z-index:-2;
     }
-    @keyframes neonMove {
-      0% { background-position:0% 50% }
-      50%{ background-position:100% 50% }
-      100%{background-position:0% 50% }
-    }
+    @keyframes neonMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
     /* Lines fixed & clipped so they don't extend page height */
     .neon-lines { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:-1; }
@@ -52,22 +47,29 @@
     /* Equal spacing between logo and heading */
     .logo-gap { margin-bottom: var(--hero-gap); }
 
-    /* Footer: matches hero gradient, darker with overlay */
+    /* Footer themed (darker match to hero) */
     .footer-themed{
       position:relative;
       background: linear-gradient(120deg, var(--brand-stops));
       background-size:300% 300%;
       animation: neonMove 20s ease infinite;
-      color:#d1d5db; /* Tailwind's gray-300 */
+      color:#d1d5db;
     }
     .footer-themed::before{
-      content:"";
-      position:absolute; inset:0;
-      background: rgba(0,0,0,.72);     /* darken overlay */
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06); /* soft top edge */
+      content:""; position:absolute; inset:0;
+      background: rgba(0,0,0,.72);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
       pointer-events:none;
     }
-    .footer-themed > *{ position:relative; z-index:1; } /* keep content above overlay */
+    .footer-themed > *{ position:relative; z-index:1; }
+
+    /* ONE-LINE HEADING: never wrap, scale to fit */
+    .one-line{
+      white-space: nowrap;
+      line-height: 1.1;
+      /* min ~20px on tiny phones, scales with viewport, caps at 72px (≈ text-7xl) */
+      font-size: clamp(20px, 9vw, 72px);
+    }
 
     /* Hovers */
     .footer-email{ transition:.3s all }
@@ -94,7 +96,8 @@
       <img src="booleanlogo-cropped.png" alt="Boolean Logo"
            class="logo-gap block mx-auto w-3/4 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
 
-      <h1 class="text-5xl md:text-5xl font-bold leading-tight mb-3">Innovating with Logic</h1>
+      <!-- One-line heading (never wraps, scales to fit) -->
+      <h1 class="one-line font-bold mb-3">Innovating with Logic</h1>
 
       <p class="text-gray-200 max-w-xl mb-6 mx-auto">
         Boolean is a technology-driven company focused on building simple, scalable,
@@ -126,4 +129,3 @@
   </footer>
 </body>
 </html>
-
