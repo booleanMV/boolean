@@ -1,441 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boolean</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --hero-gap: clamp(12px, 3vw, 28px);
+      /* centralize brand gradient stops so hero & footer match */
+      --brand-stops: #ff00ff, #00ffff, #ff0099, #00ffcc;
+    }
 
-        <title>BOOLEAN | HOME</title>
+    html, body { margin:0; padding:0; height:100%; }
+    body {
+      background:#000;
+      overflow-x:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      color:#fff;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
 
-        <!-- CSS -->
+    /* Background */
+    .neon-bg {
+      position:fixed; inset:0;
+      background:
+        radial-gradient(circle at bottom, rgba(0,0,0,0) 40%, #000 90%),
+        linear-gradient(120deg, var(--brand-stops));
+      background-size:300% 300%;
+      animation: neonMove 15s ease infinite;
+      z-index:-2;
+    }
+    @keyframes neonMove {
+      0% { background-position:0% 50% }
+      50%{ background-position:100% 50% }
+      100%{background-position:0% 50% }
+    }
 
-        <!-- google fonts -->
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    /* Lines fixed & clipped so they don't extend page height */
+    .neon-lines { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:-1; }
+    .neon-lines::before, .neon-lines::after{
+      content:""; position:absolute; left:-10%; bottom:-10%; width:140%; height:140%;
+      background:repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 8px);
+      transform:rotate(-10deg); animation:moveLines 20s linear infinite;
+    }
+    .neon-lines::after{ animation-direction:reverse; opacity:.6; }
+    @keyframes moveLines{ from{transform:translateX(0) rotate(-10deg)} to{transform:translateX(-200px) rotate(-10deg)} }
 
-        <!-- files -->
-        <link href="bootstrap.min.css" rel="stylesheet">
-        <link href="magnific-popup.css" rel="stylesheet">
-        <link href="owl.carousel.css" rel="stylesheet">
-        <link href="owl.carousel.theme.min.css" rel="stylesheet">
-        <link href="ionicons.css" rel="stylesheet">
-        <link href="main.css" rel="stylesheet">
-        <link rel="icon" href="seal2.png">
+    /* Equal spacing between logo and heading */
+    .logo-gap { margin-bottom: var(--hero-gap); }
 
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
- 
-    </head>
+    /* Footer: matches hero gradient, darker with overlay */
+    .footer-themed{
+      position:relative;
+      background: linear-gradient(120deg, var(--brand-stops));
+      background-size:300% 300%;
+      animation: neonMove 20s ease infinite;
+      color:#d1d5db; /* Tailwind's gray-300 */
+    }
+    .footer-themed::before{
+      content:"";
+      position:absolute; inset:0;
+      background: rgba(0,0,0,.72);     /* darken overlay */
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06); /* soft top edge */
+      pointer-events:none;
+    }
+    .footer-themed > *{ position:relative; z-index:1; } /* keep content above overlay */
 
-    <body>
-    <!-- Site Header Starts-->
-        <div class="site-header-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <a href="index.html"><img src="logo.svg" alt="logo"></a>
-                    </div>                   
-                </div>
-            </div>
-        </div>
-    <!-- Site Header Ends-->
+    /* Hovers */
+    .footer-email{ transition:.3s all }
+    .footer-email:hover{ color:#38bdf8; text-shadow:0 0 10px #38bdf8,0 0 20px #38bdf8 }
+    .glow-active{ color:#38bdf8 !important; text-shadow:0 0 10px #38bdf8,0 0 20px #38bdf8 !important }
+    .button-neon{ transition:.3s all, .3s box-shadow }
+    .button-neon:hover{ background:#fff; color:#000; box-shadow:0 0 10px #00ffff, 0 0 20px #ff00ff; transform:scale(1.05) }
+  </style>
+  <script>
+    function activateFooterGlow(){
+      const el = document.getElementById('footer-email');
+      el.classList.add('glow-active');
+      setTimeout(()=>el.classList.remove('glow-active'),1500);
+    }
+  </script>
+</head>
+<body class="text-white font-sans relative flex flex-col min-h-screen">
+  <div class="neon-bg"></div>
+  <div class="neon-lines"></div>
 
-    <!-- Header Starts-->
-        <section id="header" class="main-header">
-            <div class="container">
-                <div class="row">
-                    <nav class="navbar navbar-default">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="collapse navbar-collapse" id="site-nav-bar">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li><a href="#shop">Shop</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                                <li><a href="#about">About</a></li>
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
-                    </nav>
-                </div>                                   
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <h2 class="header-quote">Bridge that Gap with</h2>
-                        <p>
-                            BOOLEAN ENTERPRISES
-                        </p>
-                    </div>
-            </div>       
-        </section>        
-    <!-- header Ends -->
+  <!-- Hero: centered vertically -->
+  <main class="flex-1 flex items-center justify-center text-center px-6">
+    <div class="relative z-10">
+      <img src="booleanlogo-cropped.png" alt="Boolean Logo"
+           class="logo-gap block mx-auto w-3/4 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
 
-    <!-- Product Starts-->
-        <section id="product" class="product">
-            <div class="container section-bg">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="title-box">
-                            <h2 class="title">Welcom to our <span>Shop</span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="porduct-box">
-                            <img class="img-responsive" src="product-3.jpg" alt="product">
-                            <h3 class="product-title">Network Equipment</h3>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="porduct-box">
-                            <img class="img-responsive" src="product-2.jpg" alt="product">
-                            <h3 class="product-title">Restaurant Equipment</h3>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="porduct-box">
-                            <img class="img-responsive" src="" alt="product">
-                            <h3 class="product-title">Commercial Furniture</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="classic-title">
-                            <div class="stiker">
-                                <h3 class="inner-stiker">We are the best</h3>
-                            </div>
-                            <h3 class="outer-stiker">The best possible products and services.</h3>
-                            <div class="incline-div"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- Product Ends-->
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-3">Innovating with Logic</h1>
 
-    <!-- Shop starts -->
-    <!-- Shop -->
-    <section id="shop"class="shop">
-        <div class="container page-bgc">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="title-box">
-                        <p>Check our</p>
-                        <h2 class="title mt0">Products & Services</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="boxed">
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-8.png" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Installation</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-7.jpg" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Rack Server</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-6.jfif" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Tower Server</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-3.png" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Commercial Cooking Equipment</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="boxed">
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-4.jpg" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Bakery Equipment</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Hotel Furniture</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Restaurant Furniture</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="shop-box">
-                            <img class="img-full img-responsive" src="shop-5.jpg" alt="shop">
-                            <div class="shop-box-hover text-center">
-                                <div class="c-table">
-                                    <div class="c-cell">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shop-box-title">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Thermal Paper</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="shop-price">
-                                        MVR 00.00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Shop ends -->
+      <p class="text-gray-200 max-w-xl mb-6 mx-auto">
+        Boolean is a technology-driven company focused on building simple, scalable,
+        and elegant solutions for the digital age.
+      </p>
 
-    <!-- About Us starts-->
-            <div class="container page-bgc">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="about" class="title-box">
-                            <h2 class="title mt0">About Us</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="boxed">
-                        <div class="col-sm-12">
-                            <p class="inner-p">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+      <button onclick="activateFooterGlow()"
+              class="button-neon bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition">
+        Get in Touch
+      </button>
+    </div>
+  </main>
 
-            <!-- Services -->
-                <div class="service">
-                    <div class="row">
-                        <div class="boxed">
-                            <div class="col-sm-4">
-                                <div class="service-box">
-                                    <div class="service-title">
-                                        <div class="icon">
-                                            <span class="ion-android-options"></span>
-                                        </div>
-                                         <div class="mt-10">
-                                            Flexible
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Class aptent taciti sociosqu litora torquent conubia nos per inceptos himenaeo Lorem Ipsum is simply dummy text.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="service-box">
-                                    <div class="service-title">
-                                        <div class="icon">
-                                            <span class="ion-ios-color-wand"></span>
-                                        </div>
-                                         <div class="mt-10">
-                                            Economical
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Class aptent taciti sociosqu litora torquent conubia nos per inceptos himenaeo Lorem Ipsum is simply dummy text.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="service-box">
-                                    <div class="service-title">
-                                        <div class="icon">
-                                            <span class="ion-ios-cog"></span>
-                                        </div>
-                                         <div class="mt-10">
-                                            Customizable
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Class aptent taciti sociosqu litora torquent conubia nos per inceptos himenaeo Lorem Ipsum is simply dummy text.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    <!-- About Us Ends-->
-
-    <!-- Contact Us starts-->
-
-                <section id="contact" class="contact">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="title-box">
-                                    <p>Get in touch</p>
-                                    <a href="mailto:info@boolean.mv">
-                                    <h2 class="title mt0 ">info@boolean.mv</h2></a>
-                                    <p>Tax ID: 1067568GST502</p>
-                                    <p>Reg No.:<a href="https://business.egov.mv/BusinessRegistry/ViewDetails/137139?key=-1439531899" target="blank">C-0567/2016</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-    <!-- Contact Us Ends-->
-
-    <!-- Footer Starts--> 
-                <footer class="footer text-center">
-                    Copyright &copy; 2022 Boolean Enterprises Pvt Ltd | All rights reserved.
-                </footer>
-    <!-- Footer Ends-->
-
-    <!-- Scripts -->
-        <script src="jquery-1.12.3.min.js"></script>
-        <script src="bootstrap.min.js"></script>
-        <script src="jquery.magnific-popup.min.js"></script>
-        <script src="owl.carousel.min.js"></script>
-        <script src="script.js"></script>
-    <!-- Scripts -->
-
-    </body>
+  <!-- Footer: matched palette, darker -->
+  <footer class="footer-themed py-6 text-center relative z-10">
+    <div class="space-y-2">
+      <p class="mt-2">
+        <a id="footer-email" href="mailto:info@boolean.mv" class="footer-email text-white font-semibold">
+          info@boolean.mv
+        </a>
+      </p>
+      <p class="mt-2">TAX ID: <span class="text-white">1067568</span></p>
+      <p>Reg No:
+        <a href="https://business.egov.mv/BusinessRegistry/ViewDetails/137139?key=-1439531899"
+           target="_blank" class="text-blue-100 hover:underline">C-0567/2016</a>
+      </p>
+    </div>
+    <p class="mt-5">&copy; 2025 Boolean. All rights reserved.</p>
+  </footer>
+</body>
 </html>
